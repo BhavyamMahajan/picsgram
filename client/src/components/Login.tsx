@@ -4,11 +4,8 @@ import { useState } from "react";
 import FormInput from "./FormInput";
 import PrimaryBtn from "./PrimaryBtn";
 import { toast } from "react-toastify";
-
-import { Satisfy } from "next/font/google";
 import { useRouter } from "next/navigation";
-
-const satisfy = Satisfy({ weight: "400", subsets: ["latin"] });
+import { satisfy } from "@/app/layout";
 
 export default function Login() {
   const router = useRouter();

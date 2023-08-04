@@ -13,10 +13,10 @@ const signup = asyncHandler(async (req, res) => {
   const userNameAvailable = await userCred.findOne({ username });
   const emailRegistered = await userCred.findOne({ email });
 
-  if (userNameAvailable || emailRegistered) {
-    return res
-      .status(400)
-      .send("User Already exist with the same username or email");
+  if (emailRegistered)
+    return res.status(400).json({ error: "Email Already registered" });
+  if (userNameAvailable) {
+    return res.status(400).json({ error: "username not available" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -55,4 +55,20 @@ const login = asyncHandler(async (req, res) => {
   } else res.status(400).json({ error: "email or password is not valid" });
 });
 
-module.exports = { signup, login };
+const logginedUser = asyncHandler(async (req, res) => {
+  const { username } = req.body;
+  const { authorization } = req.headers;
+  if (!authorization) return res.status(400).json({ error: "token not valid" });
+
+  const token = authorization.split(" ")[1];
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(400).json({ error: "token not valid" });
+    }
+    if (decoded.user.username === username) {
+      return res.status(200).json({ user: decoded.user });
+    } else return res.status(400).json({ error: "token not valid" });
+  });
+});
+module.exports = { signup, login, logginedUser };

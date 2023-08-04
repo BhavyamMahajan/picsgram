@@ -1,9 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Satisfy } from "next/font/google";
 import { Poppins } from "next/font/google";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
+export const satisfy = Satisfy({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: ["400", "500", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {

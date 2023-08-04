@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import { Satisfy } from "next/font/google";
 import FormInput from "@/components/FormInput";
 import PrimaryBtn from "@/components/PrimaryBtn";
+import { useRouter } from "next/navigation";
 
 const satisfy = Satisfy({ weight: "400", subsets: ["latin"] });
 
 export default function Signup() {
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -34,11 +36,15 @@ export default function Signup() {
       password,
     });
 
-    const res = await fetch("http://localhost:5000/login", {
+    const res = await fetch("http://localhost:5000/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: data,
     });
+    const result = await res.json();
+
+    if (res.status === 400) return toast.error(result.error);
+    if (res.status === 200) router.push("/");
 
     console.log("first");
   };
