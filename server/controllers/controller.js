@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const addPost = require("../models/posts");
 const userCred = require("../models/signup");
 const asyncHandler = require("express-async-handler");
 
@@ -49,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
         },
       },
       process.env.SECRET_KEY,
-      { expiresIn: "2h" }
+      { expiresIn: "6h" }
     );
     res.status(200).json({ accessToken, username });
   } else res.status(400).json({ error: "email or password is not valid" });
@@ -71,4 +72,18 @@ const logginedUser = asyncHandler(async (req, res) => {
     } else return res.status(400).json({ error: "token not valid" });
   });
 });
-module.exports = { signup, login, logginedUser };
+
+const createPost = asyncHandler(async (req, res) => {
+  const { username, imageUrl, caption } = req.body;
+  let likes = 0,
+    comments = [];
+  const post = await addPost.create({
+    username,
+    imageUrl,
+    caption,
+    likes,
+    comments,
+  });
+});
+
+module.exports = { signup, login, logginedUser, createPost };

@@ -14,8 +14,8 @@ export default async function layout({
   return (
     <div className="flex">
       <UserValidation username={username} />
-      <NavBar />
-      {children}
+      <NavBar username={username} />
+      <div className="flex-1 py-8">{children}</div>
     </div>
   );
 }
