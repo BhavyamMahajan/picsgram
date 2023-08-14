@@ -12,13 +12,13 @@ async function userDetails(username: string) {
     body: JSON.stringify({ username }),
   });
   if (res.status === 400) return "400";
-  const data = await res.json();
-  return data;
+
+  return "200";
 }
 
 export default function UserValidation({ username }: { username: string }) {
   const router = useRouter();
-  const [data, setData] = useState();
+  const [data, setData] = useState("");
 
   useEffect(() => {
     async function getData() {
@@ -29,6 +29,6 @@ export default function UserValidation({ username }: { username: string }) {
   }, [username]);
 
   if (data === "400") router.push("/");
-  console.log(data);
+
   return <p></p>;
 }

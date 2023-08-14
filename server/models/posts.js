@@ -6,7 +6,7 @@ const postDetail = mongoose.Schema(
     imageUrl: String,
     caption: String,
     likes: Number,
-    comments: [String],
+    comments: [{ username: String, comment: String }],
   },
   {
     timestamps: true,

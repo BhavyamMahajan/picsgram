@@ -7,8 +7,12 @@ const singUp = mongoose.Schema(
     username: String,
     password: String,
     pass: String,
+    bio: String,
+    profileImg: String,
+    postsLiked: [String],
+    isVerified: Boolean,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("userCredentials", singUp);
+module.exports = mongoose.model("userinfo", singUp);

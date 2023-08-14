@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -19,6 +20,17 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      animation: {
+        zoomIn: "zoomIn .45s ease-in-out",
+      },
+      keyframes: {
+        zoomIn: {
+          "0%": { transform: "scaleY(1)" },
+          "25%": { transform: "scaleY(1.2)" },
+          "50%": { transform: "scaleY(.95)" },
+          "100%": { transform: "scaleY(1)" },
+        },
       },
     },
   },

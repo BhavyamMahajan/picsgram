@@ -85,7 +85,7 @@ export default function Signup() {
         </form>
       </div>
       <div className="border rounded px-8 py-6 sm:px-4">
-        Don&apos;t have an account ?&nbsp;
+        Have an account ?&nbsp;
         <Link href="/" className="text-blue">
           Log in
         </Link>

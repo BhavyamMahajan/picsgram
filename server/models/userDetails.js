@@ -8,4 +8,4 @@ const user = mongoose.Schema({
   posts: [String],
 });
 
-module.exports = mongoose.model("userDetails", user);
+module.exports = mongoose.model("userdetails", user);

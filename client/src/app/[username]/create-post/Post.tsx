@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { UploadPostIcon } from "../../../../public/Icons";
 import { toast } from "react-toastify";
+import { UploadPostIcon } from "../../../../public/Icons";
 
 export default function Post({ username }: { username: string }) {
   const [selectedImg, setSelectedImg] = useState<any>();
@@ -36,6 +36,11 @@ export default function Post({ username }: { username: string }) {
       headers: { "Content-Type": "application/json" },
       body: data,
     });
+
+    if (res.status === 200) {
+      toast.success("Image uploaded successfully");
+      setSelectedImg("");
+    }
   };
 
   return (
