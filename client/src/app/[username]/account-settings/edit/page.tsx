@@ -3,7 +3,9 @@ import ProfileEdit from "@/components/ProfileEdit";
 export const cache = "no-store";
 
 const getUserDetails = async (username: string) => {
-  const res = await fetch(`http://localhost:5000/edit/${username}`);
+  const res = await fetch(`http://localhost:5000/edit/${username}`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data;
 };

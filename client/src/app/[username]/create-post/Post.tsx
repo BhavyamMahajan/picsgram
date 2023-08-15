@@ -67,16 +67,18 @@ export default function Post({ username }: { username: string }) {
             Upload Image
           </p>
         </label>
-        <textarea
-          rows={3}
-          placeholder="caption..."
-          className="text-black resize-none p-2 hover:outline-none hover:border-none"
-          onChange={(e) => setCaption(e.target.value)}
-        />
+        <div className="flex flex-col ">
+          <textarea
+            rows={3}
+            placeholder="caption..."
+            className="text-black resize-none p-2 hover:outline-none hover:border-none"
+            onChange={(e) => setCaption(e.target.value)}
+          />
 
-        <button type="submit" className="bg-blue_hover font-semibold">
-          POST
-        </button>
+          <button type="submit" className="bg-blue_hover font-semibold">
+            POST
+          </button>
+        </div>
       </form>
     </div>
   );

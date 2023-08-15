@@ -149,9 +149,19 @@ const getFeeds = asyncHandler(async (req, res) => {
 
   const posts = await allPosts.find({});
 
+  // to get user profileImg
   const data = posts.map(async (post, i) => {
     const user = await userInfo.findOne({ username: post.username });
-    return { profileUrl: user.profileImg, post };
+    return {
+      profileUrl: user.profileImg,
+      postedImg: post.imageUrl,
+      likes: post.likes,
+      comments: post.comments,
+      postTime: post.createdAt,
+      postedBy: post.username,
+      caption: post.caption,
+      postId: post._id,
+    };
   });
   const result = (await Promise.allSettled(data)).map(
     ({ status, value }) => value
