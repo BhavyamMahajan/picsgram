@@ -3,35 +3,36 @@ import Link from "next/link";
 import { useState } from "react";
 import FormInput from "./FormInput";
 import PrimaryBtn from "./PrimaryBtn";
+import { satisfy } from "@/app/layout";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { satisfy } from "@/app/layout";
 
 export default function Login() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
+    // const data = JSON.stringify({ username: name, password });
 
-    const data = JSON.stringify({ username: name, password });
+    // const res = await fetch("http://localhost:5000/login", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: data,
+    // });
 
-    const res = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: data,
-    });
+    // const result = await res.json();
 
-    const result = await res.json();
-    console.log(result);
-
-    if (res.status === 400) toast.error("Invalid username or password");
-    else if (res.status === 200) {
-      localStorage.setItem("jwt", result.accessToken);
-      router.push(`/${result.username}`);
-      console.log("login success");
-    }
+    // if (res.status === 400) {
+    //   toast.error("Invalid username or password");
+    //   setLoading(false);
+    // } else if (res.status === 200) {
+    //   localStorage.setItem("jwt", result.accessToken);
+    //   router.push(`/${result.username}`);
+    // }
   };
 
   return (
@@ -55,7 +56,10 @@ export default function Login() {
             type="password"
             required={true}
           />
-          <PrimaryBtn disabled={!name || !password ? true : false}>
+          <PrimaryBtn
+            disabled={!name || !password || isLoading ? true : false}
+            isLoading={isLoading}
+          >
             Log in
           </PrimaryBtn>
         </form>

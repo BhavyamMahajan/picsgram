@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { UploadPostIcon } from "../../../../public/Icons";
+import demoImg from "../../../../public/assets/ulpoadImg.png";
 
 export default function Post({ username }: { username: string }) {
   const [selectedImg, setSelectedImg] = useState<any>();
@@ -47,19 +47,15 @@ export default function Post({ username }: { username: string }) {
     <div className="flex place-items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-zinc-800 flex flex-col gap-2 rounded-md overflow-hidden"
+        className="bg-zinc-800 flex flex-col gap-2 rounded-md overflow-hidden md:w-[80%]"
       >
-        {selectedImg ? (
-          <Image
-            src={selectedImg}
-            alt="Upload"
-            width={400}
-            height={400}
-            className="p-6"
-          />
-        ) : (
-          <UploadPostIcon />
-        )}
+        <Image
+          src={selectedImg || demoImg}
+          alt="Upload"
+          width={400}
+          height={400}
+          className="p-6"
+        />
 
         <label className="flex justify-center">
           <input type="file" hidden onChange={handleImage} />

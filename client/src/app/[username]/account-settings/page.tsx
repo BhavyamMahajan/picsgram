@@ -2,13 +2,13 @@ import ViewProfile from "@/components/ViewProfile";
 
 const getUserDetails = async (username: string) => {
   const data = await fetch(`http://localhost:5000/user-profile/${username}`, {
-    cache: "no-store",
+    next: { tags: ["profile"], revalidate: 30 },
   });
   const res = await data.json();
   return res;
 };
 
-export default async function page({
+export default async function Page({
   params,
 }: {
   params: { username: string };

@@ -14,7 +14,8 @@ module.exports = {
       },
       screens: {
         sm: { max: "640px" },
-        md: "420px",
+        xsm: "420px",
+        md: { max: "900px" },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

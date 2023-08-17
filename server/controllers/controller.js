@@ -130,7 +130,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     name: user.name,
     bio: user.bio,
     profileImg: user.profileImg,
-    posts: userPosts,
+    posts: userPosts.reverse(),
     isVerified: user.isVerified,
   };
   res.json(data);

@@ -1,4 +1,3 @@
-"use client";
 import moment from "moment";
 import Image from "next/image";
 import LikeBtn from "./LikeBtn";
@@ -9,6 +8,8 @@ import demoImg from "../../public/assets/userdemoimg.png";
 
 type Props = {
   username: string;
+  posts: Posts;
+  postsLiked: PostsLiked;
 };
 
 type Posts = {
@@ -24,21 +25,21 @@ type Posts = {
 
 type PostsLiked = string[];
 
-export default function Feeds({ username }: Props) {
-  const [posts, setPosts] = useState<Posts>();
-  const [postsLiked, setPostsLiked] = useState<PostsLiked>();
+export default function Feeds({ username, posts, postsLiked }: Props) {
+  // const [posts, setPosts] = useState<Posts>();
+  // const [postsLiked, setPostsLiked] = useState<PostsLiked>();
 
-  useEffect(() => {
-    const getFeeds = async (username: string) => {
-      const res = await fetch(`http://localhost:5000/feeds/${username}`, {
-        cache: "no-store",
-      });
-      const data = await res.json();
-      setPosts(data.posts);
-      setPostsLiked(data.postsLiked);
-    };
-    getFeeds(username);
-  }, [username]);
+  // useEffect(() => {
+  //   const getFeeds = async (username: string) => {
+  //     const res = await fetch(`http://localhost:5000/feeds/${username}`, {
+  //       cache: "no-store",
+  //     });
+  //     const data = await res.json();
+  //     setPosts(data.posts);
+  //     setPostsLiked(data.postsLiked);
+  //   };
+  //   getFeeds(username);
+  // }, [username]);
 
   return (
     <div className="flex flex-col gap-8 justify-center items-center">
@@ -72,12 +73,15 @@ export default function Feeds({ username }: Props) {
           />
           {ele.caption && (
             <p className="flex gap-2 px-2">
-              <span className="font-bold">{username}</span>
+              <span className="font-bold">{ele.postedBy}</span>
               {ele.caption}
             </p>
           )}
-          {ele.comments.length > 0 && <ViewComments comments={ele.comments} />}
-          <AddComment username={username} postId={ele.postId} />
+          <AddComment
+            username={username}
+            postId={ele.postId}
+            comments={ele.comments}
+          />
         </div>
       ))}
     </div>

@@ -12,10 +12,10 @@ export default async function layout({
   const { username } = params;
 
   return (
-    <div className="flex">
+    <div className="flex md:block">
       <UserValidation username={username} />
       <NavBar username={username} />
-      <div className="flex-1 py-8">{children}</div>
+      <div className="w-full py-8 md:pb-20">{children}</div>
     </div>
   );
 }

@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Satisfy } from "next/font/google";
+import { useRouter } from "next/navigation";
 import FormInput from "@/components/FormInput";
 import PrimaryBtn from "@/components/PrimaryBtn";
-import { useRouter } from "next/navigation";
 
 const satisfy = Satisfy({ weight: "400", subsets: ["latin"] });
 
@@ -15,19 +15,32 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
 
-    if (!email) return toast.error("Please enter an email");
+    setLoading(true);
 
-    if (!name) return toast.error("Please enter a name");
+    if (!email) {
+      setLoading(false);
+      return toast.error("Please enter an email");
+    }
 
-    if (!userName || /(-)/.test(userName))
+    if (!name) {
+      setLoading(false);
+      return toast.error("Please enter a name");
+    }
+
+    if (!userName || /(-)/.test(userName)) {
+      setLoading(false);
       return toast.error("Enter a username without using '-'");
+    }
 
-    if (password.length < 8)
+    if (password.length < 8) {
+      setLoading(false);
       return toast.error("Password length should be greater than 8 characters");
+    }
 
     const data = JSON.stringify({
       email,
@@ -43,10 +56,11 @@ export default function Signup() {
     });
     const result = await res.json();
 
-    if (res.status === 400) return toast.error(result.error);
+    if (res.status === 400) {
+      setLoading(false);
+      return toast.error(result.error);
+    }
     if (res.status === 200) router.push("/");
-
-    console.log("first");
   };
 
   return (
@@ -81,7 +95,12 @@ export default function Signup() {
             type="password"
           />
 
-          <PrimaryBtn>Sign up</PrimaryBtn>
+          <PrimaryBtn
+            disabled={!email || !name || !userName || !password ? true : false}
+            isLoading={isLoading}
+          >
+            Sign up
+          </PrimaryBtn>
         </form>
       </div>
       <div className="border rounded px-8 py-6 sm:px-4">

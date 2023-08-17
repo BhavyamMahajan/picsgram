@@ -46,11 +46,12 @@ export default function UserSearch({ username, query }: Props) {
       {query ? (
         <ViewProfile data={data} username={query} query={true} />
       ) : (
-        <div className="w-[40%] m-auto flex flex-col gap-6">
+        <div className="w-[40%] md:w-[80%] m-auto flex flex-col gap-6">
           <div className="rounded-md flex gap-2 p-2 border">
             <input
               value={searchKey}
               type="text"
+              placeholder="Search by username"
               className="w-full bg-transparent border-none outline-none"
               onChange={handleSearch}
             />

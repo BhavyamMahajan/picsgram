@@ -7,7 +7,7 @@ type Props = {
   username: string;
   postId: string;
   postsLiked: string[] | undefined;
-  totalLikes: Number;
+  totalLikes: any;
 };
 export default function LikeBtn({
   postId,

@@ -6,8 +6,6 @@ import ViewComments from "@/components/ViewComments";
 import demoimg from "../../../public/assets/userdemoimg.png";
 import Feeds from "@/components/Feeds";
 
-// export const revalidate = 5;
-
 const getFeeds = async (username: string) => {
   const res = await fetch(`http://localhost:5000/feeds/${username}`, {
     cache: "no-store",
@@ -26,5 +24,5 @@ export default async function page({
   const data = await getFeeds(username);
   const { posts, postsLiked } = data;
 
-  return <Feeds username={username} />;
+  return <Feeds username={username} posts={posts} postsLiked={postsLiked} />;
 }

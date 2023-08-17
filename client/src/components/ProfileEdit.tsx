@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
-import demoImg from "../../public/assets/userdemoimg.png";
 import { useRouter } from "next/navigation";
+import demoImg from "../../public/assets/userdemoimg.png";
 
 type Props = {
   data: {
@@ -39,7 +39,7 @@ export default function ProfileEdit({ data }: Props) {
       bio: newBio,
       profileImg: selectedImg,
     });
-    console.log(data);
+
     const res = await fetch("http://localhost:5000/edit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

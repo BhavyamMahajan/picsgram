@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { satisfy } from "../layout";
 
 async function userDetails(username: string) {
   const res = await fetch("http://localhost:5000/user", {
@@ -30,5 +31,11 @@ export default function UserValidation({ username }: { username: string }) {
 
   if (data === "400") router.push("/");
 
-  return <p></p>;
+  return (
+    <p
+      className={`hidden md:block ${satisfy.className} sticky top-0 bg-black px-4 py-2 text-2xl border-b border-zinc-600`}
+    >
+      Picsgram
+    </p>
+  );
 }
