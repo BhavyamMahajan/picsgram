@@ -34,4 +34,5 @@ router.get("/feeds/:userid", getFeeds);
 router.post("/update-likes", likePost);
 router.post("/add-comment", addComments);
 router.get("/search/:key", getSearchedUser);
+
 module.exports = router;

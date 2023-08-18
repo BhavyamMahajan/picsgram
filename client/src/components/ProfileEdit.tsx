@@ -45,7 +45,6 @@ export default function ProfileEdit({ data }: Props) {
       headers: { "Content-Type": "application/json" },
       body: data,
     });
-
     if (res.status === 200) router.back();
   };
   return (

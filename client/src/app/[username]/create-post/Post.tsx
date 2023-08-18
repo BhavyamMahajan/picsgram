@@ -54,7 +54,7 @@ export default function Post({ username }: { username: string }) {
           alt="Upload"
           width={400}
           height={400}
-          className="p-6"
+          className="w-[400px] h-[400px] md:w-[300px] md:h-[300px] p-6"
         />
 
         <label className="flex justify-center">

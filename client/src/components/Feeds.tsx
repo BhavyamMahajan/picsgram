@@ -2,9 +2,9 @@ import moment from "moment";
 import Image from "next/image";
 import LikeBtn from "./LikeBtn";
 import AddComment from "./AddComment";
-import ViewComments from "./ViewComments";
 import { useEffect, useState } from "react";
 import demoImg from "../../public/assets/userdemoimg.png";
+import { LikeButtonIcon } from "../../public/Icons";
 
 type Props = {
   username: string;

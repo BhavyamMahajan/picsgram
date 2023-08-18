@@ -11,28 +11,28 @@ export default function Login() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    // const data = JSON.stringify({ username: name, password });
+    const data = JSON.stringify({ username: name, password });
 
-    // const res = await fetch("http://localhost:5000/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: data,
-    // });
+    const res = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: data,
+    });
 
-    // const result = await res.json();
+    const result = await res.json();
 
-    // if (res.status === 400) {
-    //   toast.error("Invalid username or password");
-    //   setLoading(false);
-    // } else if (res.status === 200) {
-    //   localStorage.setItem("jwt", result.accessToken);
-    //   router.push(`/${result.username}`);
-    // }
+    if (res.status === 400) {
+      toast.error("Invalid username or password");
+      setLoading(false);
+    } else if (res.status === 200) {
+      localStorage.setItem("jwt", result.accessToken);
+      router.push(`/${result.username}`);
+    }
   };
 
   return (
