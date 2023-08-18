@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import SkeletonLoader from "./SkeletonLoader";
+import { SkeletonLoader } from "./SkeletonLoader";
 import demo from "../../public/assets/userdemoimg.png";
 import { EditIcon, PostsIcon, VerifiedBatch } from "../../public/Icons";
 

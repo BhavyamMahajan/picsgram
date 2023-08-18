@@ -29,8 +29,6 @@ export default function LikeBtn({
         postId,
       }),
     });
-
-    if (res.status === 200) console.log("ok");
   };
 
   useEffect(() => {

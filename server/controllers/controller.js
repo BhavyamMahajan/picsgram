@@ -224,7 +224,6 @@ const addComments = asyncHandler(async (req, res) => {
 });
 
 const getSearchedUser = asyncHandler(async (req, res) => {
-  console.log(req.url);
   const key = req.url.split("/")[2];
 
   const users = await userInfo.find({ username: { $regex: key } });
