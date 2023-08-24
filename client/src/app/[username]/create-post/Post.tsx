@@ -7,8 +7,10 @@ import demoImg from "../../../../public/assets/ulpoadImg.png";
 export default function Post({ username }: { username: string }) {
   const [selectedImg, setSelectedImg] = useState<any>();
   const [caption, setCaption] = useState("");
+  const [postImg, setImgPost] = useState(null);
 
   const handleImage = (e: any) => {
+    setImgPost(e.target.files[0]);
     const fileReader = new FileReader();
     fileReader.readAsDataURL(e.target.files[0]);
 
@@ -28,6 +30,7 @@ export default function Post({ username }: { username: string }) {
     const data = JSON.stringify({
       username,
       imageUrl: selectedImg,
+      // file: postImg,
       caption,
     });
 

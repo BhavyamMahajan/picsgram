@@ -87,6 +87,13 @@ const createPost = asyncHandler(async (req, res) => {
   const { username, imageUrl, caption } = req.body;
   let likes = 0,
     comments = [];
+
+  // const file = req.file;
+  // console.log({
+  //   id: file.id,
+  //   name: file.filename,
+  //   contentType: file.contentType,
+  // });
   const post = await allPosts.create({
     username,
     imageUrl,

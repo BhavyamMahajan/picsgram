@@ -1,5 +1,4 @@
 const express = require("express");
-
 const {
   signup,
   login,
@@ -16,6 +15,10 @@ const {
 } = require("../controllers/controller");
 
 const validateToken = require("../middleware/userTokenHandler");
+const multer = require("multer");
+const storage = require("../middleware/uploadImgToFs");
+
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
@@ -25,7 +28,9 @@ router.post("/login", login);
 
 router.post("/user", validateToken, logginedUser);
 
+// router.post("/create-post", upload.single("file"), createPost);
 router.post("/create-post", createPost);
+
 router.get("/edit/:userid", getUserDetails);
 router.post("/edit", editUserDetails);
 router.get("/user-profile/:user", getUserProfile);
