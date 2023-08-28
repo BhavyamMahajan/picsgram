@@ -27,9 +27,5 @@ export default async function page({
   const data = await getFeeds(username);
   const { posts, postsLiked } = data;
 
-  return posts.length > 0 ? (
-    <Feeds username={username} posts={posts} postsLiked={postsLiked} />
-  ) : (
-    <CardSkeletonLoader />
-  );
+  return <Feeds username={username} posts={posts} postsLiked={postsLiked} />;
 }

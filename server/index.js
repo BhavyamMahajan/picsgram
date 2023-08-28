@@ -10,6 +10,13 @@ const PORT = process.env.PORT;
 
 connectDb();
 app.use(express.json());
+// app.use(
+//   express.urlencoded({
+//     extended: false,
+//     limit: 10000,
+//     parameterLimit: 3,
+//   })
+// );
 app.use(cors());
 app.use(routes);
 

@@ -35,7 +35,7 @@ export default function AddComment({ username, postId, comments }: Props) {
 
   return (
     <>
-      {totalComments.length > 0 && <ViewComments comments={totalComments} />}
+      {totalComments?.length > 0 && <ViewComments comments={totalComments} />}
       <form
         className="flex items-center gap-2 border-t border-zinc-800 px-2"
         onSubmit={addComment}

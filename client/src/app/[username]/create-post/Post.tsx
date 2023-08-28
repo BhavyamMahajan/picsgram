@@ -7,7 +7,8 @@ import demoImg from "../../../../public/assets/ulpoadImg.png";
 export default function Post({ username }: { username: string }) {
   const [selectedImg, setSelectedImg] = useState<any>();
   const [caption, setCaption] = useState("");
-  const [postImg, setImgPost] = useState(null);
+  const [postImg, setImgPost] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleImage = (e: any) => {
     setImgPost(e.target.files[0]);
@@ -21,28 +22,29 @@ export default function Post({ username }: { username: string }) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!selectedImg) {
       toast.error("Select Image");
       return;
     }
 
-    const data = JSON.stringify({
-      username,
-      imageUrl: selectedImg,
-      // file: postImg,
-      caption,
-    });
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("caption", caption);
+    formData.append("file", postImg);
 
     const res = await fetch("http://localhost:5000/create-post", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: data,
+      body: formData,
     });
 
     if (res.status === 200) {
       toast.success("Image uploaded successfully");
       setSelectedImg("");
+      setImgPost("");
+      setCaption("");
+      setLoading(false);
     }
   };
 
@@ -69,6 +71,7 @@ export default function Post({ username }: { username: string }) {
         <div className="flex flex-col ">
           <textarea
             rows={3}
+            value={caption}
             placeholder="caption..."
             className="text-black resize-none p-2 hover:outline-none hover:border-none"
             onChange={(e) => setCaption(e.target.value)}

@@ -84,19 +84,15 @@ const logginedUser = asyncHandler(async (req, res) => {
 });
 
 const createPost = asyncHandler(async (req, res) => {
-  const { username, imageUrl, caption } = req.body;
+  const { username, caption } = req.body;
   let likes = 0,
     comments = [];
 
-  // const file = req.file;
-  // console.log({
-  //   id: file.id,
-  //   name: file.filename,
-  //   contentType: file.contentType,
-  // });
+  const file = req.file.buffer;
+
   const post = await allPosts.create({
     username,
-    imageUrl,
+    imageUrl: file,
     caption,
     likes,
     comments,

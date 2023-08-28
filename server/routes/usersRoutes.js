@@ -16,7 +16,9 @@ const {
 
 const validateToken = require("../middleware/userTokenHandler");
 const multer = require("multer");
-const storage = require("../middleware/uploadImgToFs");
+// const storage = require("../middleware/uploadImgToFs");
+
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
@@ -28,8 +30,8 @@ router.post("/login", login);
 
 router.post("/user", validateToken, logginedUser);
 
-// router.post("/create-post", upload.single("file"), createPost);
-router.post("/create-post", createPost);
+router.post("/create-post", upload.single("file"), createPost);
+// router.post("/create-post", createPost);
 
 router.get("/edit/:userid", getUserDetails);
 router.post("/edit", editUserDetails);
