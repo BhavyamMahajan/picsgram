@@ -4,6 +4,7 @@ import { useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { useRouter } from "next/navigation";
 import demoImg from "../../public/assets/userdemoimg.png";
+import { toast } from "react-toastify";
 
 type Props = {
   data: {
@@ -23,6 +24,9 @@ export default function ProfileEdit({ data }: Props) {
   const [selectedImg, setSelectedImg] = useState<any>(profileImg);
 
   const handleImage = (e: any) => {
+    if (!e.target.files[0]) return;
+    if (e.target.files[0].size > 5000000)
+      return toast.error("file size must be less than 5mb");
     const fileReader = new FileReader();
     fileReader.readAsDataURL(e.target.files[0]);
 
@@ -49,34 +53,34 @@ export default function ProfileEdit({ data }: Props) {
   };
   return (
     <form
-      className="w-[70%] m-auto border-2 border-zinc-800 rounded p-4 flex flex-col gap-8"
+      className="md:w-[80%] w-[70%] m-auto border-2 border-zinc-800 rounded p-4 flex flex-col gap-8"
       onSubmit={handleSubmit}
     >
-      <div>
+      <div className="md:flex md:flex-col md:gap-2">
         <Image
           src={selectedImg ? selectedImg : demoImg}
           alt="Profile"
           width={250}
           height={250}
-          className="rounded-full m-auto"
+          className="w-[250px] h-[250px] rounded-full m-auto md:w-[100px] md:h-[100px]"
         />
 
-        <label className="w-[85%] flex justify-end">
-          <input type="file" hidden onChange={handleImage} />
+        <label className="md:w-[100%] md:justify-center w-[85%] flex justify-end">
+          <input type="file" hidden onChange={handleImage} accept="image/*" />
           <p className="bg-[rgb(54,54,54)] p-1 rounded-md font-semibold cursor-pointer">
             Upload Image
           </p>
         </label>
       </div>
 
-      <div className="w-full flex gap-4">
+      <div className="w-full flex gap-4 md:flex-col">
         <label className="w-full flex flex-col gap-1">
           <p>username</p>
           <input
             type="text"
             value={username}
             disabled
-            className="w-full bg-transparent border-2 border-zinc-600 rounded p-1"
+            className="w-full bg-transparent border-2 border-zinc-600 rounded p-1 disabled:cursor-not-allowed"
           />
         </label>
         <label className="w-full flex flex-col gap-1">

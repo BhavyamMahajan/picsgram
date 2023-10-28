@@ -7,5 +7,5 @@ export default function Logout() {
 
   localStorage.setItem("jwt", "");
   router.push("/");
-  return <p></p>;
+  return <></>;
 }

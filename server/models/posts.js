@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const postDetail = mongoose.Schema(
   {
     username: String,
-    imageUrl: Buffer,
+    imageUrl: [],
     caption: String,
     likes: Number,
     comments: [{ username: String, comment: String }],

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { satisfy } from "../layout";
 
 async function userDetails(username: string) {
@@ -17,7 +17,13 @@ async function userDetails(username: string) {
   return "200";
 }
 
-export default function UserValidation({ username }: { username: string }) {
+export default function UserValidation({
+  username,
+  children,
+}: {
+  username: string;
+  children: ReactNode;
+}) {
   const router = useRouter();
   const [data, setData] = useState("");
 
@@ -32,10 +38,13 @@ export default function UserValidation({ username }: { username: string }) {
   if (data === "400") router.push("/");
 
   return (
-    <p
-      className={`hidden md:block ${satisfy.className} sticky top-0 bg-black px-4 py-2 text-2xl border-b border-zinc-600`}
-    >
-      Picsgram
-    </p>
+    <>
+      <p
+        className={`hidden md:block ${satisfy.className} sticky top-0 bg-black px-4 py-2 text-2xl border-b border-zinc-600`}
+      >
+        Picsgram
+      </p>
+      {children}
+    </>
   );
 }

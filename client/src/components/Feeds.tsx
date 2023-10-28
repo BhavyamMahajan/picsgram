@@ -1,10 +1,17 @@
+"use client";
 import moment from "moment";
 import Image from "next/image";
 import LikeBtn from "./LikeBtn";
 import AddComment from "./AddComment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { CardSkeletonLoader } from "./SkeletonLoader";
 import demoImg from "../../public/assets/userdemoimg.png";
-import { SkeletonLoader } from "./SkeletonLoader";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "../app/[username]/create-post/styles.css";
 
 type Props = {
   username: string;
@@ -19,28 +26,13 @@ type Posts = {
   caption: string;
   postTime: string;
   postedBy: string;
-  postedImg: any;
+  postedImg: [];
   profileUrl: string;
 }[];
 
 type PostsLiked = string[];
 
 export default function Feeds({ username, posts, postsLiked }: Props) {
-  // const [posts, setPosts] = useState<Posts>();
-  // const [postsLiked, setPostsLiked] = useState<PostsLiked>();
-
-  // useEffect(() => {
-  //   const getFeeds = async (username: string) => {
-  //     const res = await fetch(`http://localhost:5000/feeds/${username}`, {
-  //       cache: "no-store",
-  //     });
-  //     const data = await res.json();
-  //     setPosts(data.posts);
-  //     setPostsLiked(data.postsLiked);
-  //   };
-  //   getFeeds(username);
-  // }, [username]);
-
   function arrayBufferToBase64(buffer: any) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));
@@ -56,52 +48,70 @@ export default function Feeds({ username, posts, postsLiked }: Props) {
             key={i}
             className="flex flex-col gap-2 border border-zinc-700 rounded py-2"
           >
-            <div className="flex items-center gap-3 px-2 pb-1">
+            <div className="md:px-6 flex items-center gap-3 px-2 pb-1">
               <Image
                 src={ele?.profileUrl || demoImg}
                 alt="profile"
                 width={50}
                 height={50}
-                className="rounded-full"
+                className="rounded-full w-[50px] h-[50px]"
               />
 
               <p className="font-semibold">{ele?.postedBy}</p>
-              <ul className="px-2">
+              <ul className="pl-4">
                 <li className="list-disc text-zinc-600">
                   {moment(ele?.postTime).fromNow()}
                 </li>
               </ul>
             </div>
-
-            <Image
-              src={`data:${
-                "image/jpeg" || "image/jpg" || "image/png"
-              };base64,${arrayBufferToBase64(ele?.postedImg.data)}`}
-              alt="Image"
-              width={500}
-              height={500}
-            />
-            <LikeBtn
-              username={username}
-              postId={ele?.postId}
-              postsLiked={postsLiked}
-              totalLikes={ele?.likes}
-            />
+            <Swiper
+              cssMode={true}
+              navigation={true}
+              pagination={true}
+              mousewheel={true}
+              keyboard={true}
+              modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+            >
+              {ele?.postedImg?.map((url: any, index) => (
+                <SwiperSlide key={index}>
+                  <Image
+                    src={`data:${url.mimetype};base64,${url.buffer}`}
+                    alt="Image"
+                    width={500}
+                    height={500}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="flex md:px-4">
+              <LikeBtn
+                username={username}
+                postId={ele?.postId}
+                postsLiked={postsLiked}
+                totalLikes={ele?.likes}
+              />
+            </div>
             {ele?.caption && (
-              <p className="flex gap-2 px-2">
+              <p className="flex gap-2 px-2 md:px-4">
                 <span className="font-bold">{ele?.postedBy}</span>
                 {ele?.caption}
               </p>
             )}
-            <AddComment
-              username={username}
-              postId={ele?.postId}
-              comments={ele?.comments}
-            />
+            <div className="md:px-4">
+              <AddComment
+                username={username}
+                postId={ele?.postId}
+                comments={ele?.comments}
+              />
+            </div>
           </div>
         ))
       ) : (
-        <SkeletonLoader />
+        <>
+          <CardSkeletonLoader />
+          <CardSkeletonLoader />
+          <CardSkeletonLoader />
+        </>
       )}
     </div>
   );

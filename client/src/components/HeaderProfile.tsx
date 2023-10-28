@@ -34,7 +34,7 @@ export default async function HeaderProfile({
           Settings
         </Link>
         <Link
-          href="?logout=true"
+          href="/logout"
           className="flex gap-4 font-semibold p-3 px-4 rounded-md hover:bg-white/[.1] hover:transition-all"
         >
           <LogoutIcon />

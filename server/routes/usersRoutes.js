@@ -30,7 +30,7 @@ router.post("/login", login);
 
 router.post("/user", validateToken, logginedUser);
 
-router.post("/create-post", upload.single("file"), createPost);
+router.post("/create-post", upload.array("file", 6), createPost);
 // router.post("/create-post", createPost);
 
 router.get("/edit/:userid", getUserDetails);

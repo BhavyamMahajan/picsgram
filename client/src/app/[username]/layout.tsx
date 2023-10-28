@@ -13,9 +13,10 @@ export default async function layout({
 
   return (
     <div className="flex md:block">
-      <UserValidation username={username} />
-      <NavBar username={username} />
-      <div className="w-full py-8 md:pb-20">{children}</div>
+      <UserValidation username={username}>
+        <NavBar username={username} />
+        <div className="w-full py-8 md:pb-20">{children}</div>
+      </UserValidation>
     </div>
   );
 }

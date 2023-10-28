@@ -6,12 +6,14 @@ import PrimaryBtn from "./PrimaryBtn";
 import { satisfy } from "@/app/layout";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ClosedEyeIcon, OpenEyeIcon } from "../../public/Icons";
 
 export default function Login() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -52,9 +54,12 @@ export default function Login() {
           <FormInput
             stateName={password}
             setState={setPassword}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
             labelName="Password"
             type="password"
             required={true}
+            svg={showPassword ? <OpenEyeIcon /> : <ClosedEyeIcon />}
           />
           <PrimaryBtn
             disabled={!name || !password || isLoading ? true : false}

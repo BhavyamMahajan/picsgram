@@ -1,10 +1,16 @@
 "use client";
+import Modal from "./Modal";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SkeletonLoader } from "./SkeletonLoader";
-import demo from "../../public/assets/userdemoimg.png";
-import { EditIcon, PostsIcon, VerifiedBatch } from "../../public/Icons";
+import demoImg from "../../public/assets/userdemoimg.png";
+import {
+  CarouselIcon,
+  EditIcon,
+  PostsIcon,
+  VerifiedBatch,
+} from "../../public/Icons";
 
 type Props = {
   data?: any;
@@ -13,6 +19,7 @@ type Props = {
 };
 export default function ViewProfile({ data, username, query = false }: Props) {
   const [dataa, setDataa] = useState(data);
+  const [modalData, setModalData] = useState({});
 
   useEffect(() => {
     const getUserDetails = async () => {
@@ -34,11 +41,11 @@ export default function ViewProfile({ data, username, query = false }: Props) {
         <div className="w-4/5 m-auto flex flex-col gap-2 px-8 md:w-[90%] md:px-0">
           <div className="flex gap-16 border-b border-zinc-800 pb-8 md:gap-8">
             <Image
-              src={dataa?.profileImg || demo}
+              src={dataa?.profileImg || demoImg}
               alt={username}
               width={150}
               height={150}
-              className="rounded-full md:w-[100px] md:h-[100px]"
+              className="w-[150px] h-[150px] rounded-full md:w-[100px] md:h-[100px]"
             />
             <div className="flex flex-col gap-2 w-3/5">
               <p className="flex gap-2 items-center text-xl">
@@ -66,16 +73,35 @@ export default function ViewProfile({ data, username, query = false }: Props) {
 
           {dataa?.posts.length > 0 ? (
             <div className="grid grid-cols-3 gap-2 pt-2">
-              {dataa.posts.map((ele: any) => (
-                <Image
-                  key={ele._id}
-                  src={ele.imageUrl}
-                  alt="loading.."
-                  width={250}
-                  height={250}
-                  className="w-[100%] h-[100%]"
-                />
-              ))}
+              {dataa.posts.map((post: any, index: number) =>
+                post.imageUrl.map(
+                  (url: any, index: number) =>
+                    index < 1 && (
+                      <div className="relative">
+                        <Image
+                          src={`data:${url.mimetype};base64,${url.buffer}`}
+                          alt="loading.."
+                          width={250}
+                          height={250}
+                          className="w-[100%] h-[100%] cursor-pointer"
+                          onClick={() =>
+                            setModalData({
+                              isOpen: true,
+                              data: post,
+                              profileImg: dataa.profileImg,
+                              postsLiked: dataa.postsLiked,
+                            })
+                          }
+                        />
+                        {post?.imageUrl?.length > 1 && (
+                          <span className="absolute top-1 right-2">
+                            <CarouselIcon />
+                          </span>
+                        )}
+                      </div>
+                    )
+                )
+              )}
             </div>
           ) : (
             <p className="flex self-center text-3xl pt-28">Aww No Posts</p>
@@ -84,6 +110,12 @@ export default function ViewProfile({ data, username, query = false }: Props) {
       ) : (
         <SkeletonLoader />
       )}
+      <Modal
+        data={modalData}
+        username={username}
+        query={query}
+        setModalData={setModalData}
+      />
     </>
   );
 }

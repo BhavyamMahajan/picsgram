@@ -40,7 +40,10 @@ export default function LikeBtn({
 
   return (
     <div className="flex flex-col gap-1 self-start px-2">
-      <span className="hover:animate-zoomIn" onClick={handleLikes}>
+      <span
+        className="hover:animate-zoomIn cursor-pointer"
+        onClick={handleLikes}
+      >
         {toggle ? <UnlikeButtonIcon /> : <LikeButtonIcon />}
       </span>
 

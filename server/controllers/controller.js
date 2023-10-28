@@ -88,16 +88,17 @@ const createPost = asyncHandler(async (req, res) => {
   let likes = 0,
     comments = [];
 
-  const file = req.file.buffer;
+  const files = req.files;
 
   const post = await allPosts.create({
     username,
-    imageUrl: file,
+    imageUrl: files,
     caption,
     likes,
     comments,
   });
   if (post) res.status(200).json({ message: "success" });
+  res.status(400).json({ message: "error" });
 });
 
 const getUserDetails = asyncHandler(async (req, res) => {

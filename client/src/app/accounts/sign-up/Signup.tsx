@@ -6,6 +6,7 @@ import { Satisfy } from "next/font/google";
 import { useRouter } from "next/navigation";
 import FormInput from "@/components/FormInput";
 import PrimaryBtn from "@/components/PrimaryBtn";
+import { ClosedEyeIcon, OpenEyeIcon } from "../../../../public/Icons";
 
 const satisfy = Satisfy({ weight: "400", subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
@@ -32,9 +34,13 @@ export default function Signup() {
       return toast.error("Please enter a name");
     }
 
-    if (!userName || /(-)/.test(userName)) {
+    if (!userName) {
       setLoading(false);
-      return toast.error("Enter a username without using '-'");
+      return toast.error("Please enter a username");
+    }
+    if (!/^[^- ]*$/.test(userName)) {
+      setLoading(false);
+      return toast.error("Enter a username without using - or spaces");
     }
 
     if (password.length < 8) {
@@ -91,8 +97,11 @@ export default function Signup() {
           <FormInput
             stateName={password}
             setState={setPassword}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
             labelName="Password"
             type="password"
+            svg={showPassword ? <OpenEyeIcon /> : <ClosedEyeIcon />}
           />
 
           <PrimaryBtn
